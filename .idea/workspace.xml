@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="ac11f017-a651-415b-ab10-f7ee0da4cfbb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Serie.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Serie.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -175,35 +174,6 @@
               <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
               <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Entity" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Migrations" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Symf_Vroum" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Symf_Vroum" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Repository" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -240,12 +210,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1552907357095</updated>
-      <workItem from="1552907358426" duration="1597000" />
+      <workItem from="1552907358426" duration="1710000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1597000" />
+    <option name="totallyTimeSpent" value="1710000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="688" extended-state="6" />
