@@ -12,6 +12,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+
+    const ADMIN_TYPE = 1;
+    const MONITOR_TYPE = 2;
+    const STUDENT_TYPE = 3;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
