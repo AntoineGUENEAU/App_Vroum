@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -10,6 +11,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    /**
+     * User constructor.
+     * @param $userName
+     * @param $vehicles
+     * @param $email
+     * @param $isActive
+     * @param $roles
+     */
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -82,11 +96,29 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    /**
+     * @param mixed $roles
+     *
+     * @throws Exception
+     */
+    public function setRoles($roles): void
     {
-        $this->roles = $roles;
-
-        return $this;
+        if(!in_array('ROLE_USER',$roles))
+        {
+            $this->roles[]= 'ROLE_USER';
+        }
+        else {
+            foreach ($roles as $role)
+            {
+                if(substr($role, 0, 5) !== 'ROLE_')
+                {
+                    throw new Exception('Role incorrect');
+                }
+                else{
+                    $this->roles[] =$role;
+                }
+            }
+        }
     }
 
     /**
