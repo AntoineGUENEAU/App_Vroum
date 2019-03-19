@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -10,6 +11,19 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class User implements UserInterface
 {
+    /**
+     * User constructor.
+     * @param $userName
+     * @param $vehicles
+     * @param $email
+     * @param $isActive
+     * @param $roles
+     */
+    public function __construct()
+    {
+        $this->roles = ['ROLE_USER'];
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -23,7 +37,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $roles = [];
 
@@ -77,16 +91,34 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_STUDENT';
 
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    /**
+     * @param mixed $roles
+     *
+     * @throws Exception
+     */
+    public function setRoles($roles): void
     {
-        $this->roles = $roles;
-
-        return $this;
+        if(!in_array('ROLE_STUDENT',$roles))
+        {
+            $this->roles[]= 'ROLE_STUDENT';
+        }
+        else {
+            foreach ($roles as $role)
+            {
+                if(substr($role, 0, 5) !== 'ROLE_')
+                {
+                    throw new Exception('Role incorrect');
+                }
+                else{
+                    $this->roles[] =$role;
+                }
+            }
+        }
     }
 
     /**
@@ -151,5 +183,11 @@ class User implements UserInterface
     public function setLastname($lastname): void
     {
         $this->lastname = $lastname;
+    }
+
+    public function __toString()
+    {
+        // Pour affiche rle nom dans le select
+        return $this->email;
     }
 }
