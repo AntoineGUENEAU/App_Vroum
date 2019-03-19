@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
-use App\Form\SerieType;
+use App\Form\Serie1Type;
 use App\Repository\SerieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class SerieController extends AbstractController
     public function new(Request $request): Response
     {
         $serie = new Serie();
-        $form = $this->createForm(SerieType::class, $serie);
+        $form = $this->createForm(Serie1Type::class, $serie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -63,7 +63,7 @@ class SerieController extends AbstractController
      */
     public function edit(Request $request, Serie $serie): Response
     {
-        $form = $this->createForm(SerieType::class, $serie);
+        $form = $this->createForm(Serie1Type::class, $serie);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
