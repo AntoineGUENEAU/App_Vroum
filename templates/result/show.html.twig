@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Result{% endblock %}
+
+{% block body %}
+    <h1>Result</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ result.id }}</td>
+            </tr>
+            <tr>
+                <th>Result</th>
+                <td>{{ result.result }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ result.date ? result.date|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Serie</th>
+                <td>{{ serie }}</td>
+            </tr>
+            <tr>
+                <th>Etudiant</th>
+                <td>{{ student }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('result_index') }}">back to list</a>
+
+    <a href="{{ path('result_edit', {'id': result.id}) }}">edit</a>
+
+    {{ include('result/_delete_form.html.twig') }}
+{% endblock %}

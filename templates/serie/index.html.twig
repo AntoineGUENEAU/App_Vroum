@@ -16,6 +16,7 @@
         {% for serie in series %}
             <tr>
                 <td>{{ serie.id }}</td>
+                <td>{{ serie.libelle }}</td>
                 <td>
                     <a class="btn btn-light" href="{{ path('serie_show', {'id': serie.id}) }}"><i class="fas fa-eye"></i></a>
                     <a class="btn btn-success" href="{{ path('serie_edit', {'id': serie.id}) }}"><i class="fas fa-pen"></i></a>

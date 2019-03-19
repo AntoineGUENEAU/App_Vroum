@@ -7,10 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ serie.id }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ serie.id }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ serie.libelle }}</td>
+        </tr>
+        <tr>
+            <th>Questions</th>
+
+                {% for question in questions %}
+                    <td>{{ question.content }}<td/>
+                {% endfor %}
+
+        </tr>
         </tbody>
     </table>
 

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ResponseQuestion{% endblock %}
+
+{% block body %}
+    <h1>ResponseQuestion</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ response_question.id }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ response_question.content }}</td>
+            </tr>
+            <tr>
+                <th>Good_answer</th>
+                <td>{{ response_question.goodAnswer ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('response_question_index') }}">back to list</a>
+
+    <a href="{{ path('response_question_edit', {'id': response_question.id}) }}">edit</a>
+
+    {{ include('response_question/_delete_form.html.twig') }}
+{% endblock %}

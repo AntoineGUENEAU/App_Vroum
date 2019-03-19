@@ -35,7 +35,7 @@ class Question
     private $serie;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Response", mappedBy="question", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\ResponseQuestion", mappedBy="question", orphanRemoval=true)
      */
     private $responses;
 
@@ -86,14 +86,14 @@ class Question
     }
 
     /**
-     * @return Collection|Response[]
+     * @return Collection|ResponseQuestion[]
      */
     public function getResponses(): Collection
     {
         return $this->responses;
     }
 
-    public function addResponse(Response $response): self
+    public function addResponse(ResponseQuestion $response): self
     {
         if (!$this->responses->contains($response)) {
             $this->responses[] = $response;
@@ -103,7 +103,7 @@ class Question
         return $this;
     }
 
-    public function removeResponse(Response $response): self
+    public function removeResponse(ResponseQuestion $response): self
     {
         if ($this->responses->contains($response)) {
             $this->responses->removeElement($response);
@@ -114,5 +114,11 @@ class Question
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        // Pour affiche rle nom dans le select
+        return $this->content;
     }
 }

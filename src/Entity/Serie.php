@@ -24,14 +24,34 @@ class Serie
     private $questions;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="series")
+     * @ORM\Column(type="string")
      */
-    private $users;
+    private $libelle;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Result", mappedBy="serie_id", cascade={"persist", "remove"})
+     */
+    private $result;
 
     public function __construct()
     {
         $this->questions = new ArrayCollection();
-        $this->users = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * @param mixed $libelle
+     */
+    public function setLibelle($libelle): void
+    {
+        $this->libelle = $libelle;
     }
 
     public function getId(): ?int
@@ -70,27 +90,26 @@ class Serie
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+
+    public function __toString()
     {
-        return $this->users;
+        // Pour affiche rle nom dans le select
+        return $this->libelle;
     }
 
-    public function addUser(User $user): self
+    public function getResult(): ?Result
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-        }
-
-        return $this;
+        return $this->result;
     }
 
-    public function removeUser(User $user): self
+    public function setResult(?Result $result): self
     {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
+        $this->result = $result;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newSerie_id = $result === null ? null : $this;
+        if ($newSerie_id !== $result->getSerieId()) {
+            $result->setSerieId($newSerie_id);
         }
 
         return $this;

@@ -53,8 +53,10 @@ class QuestionController extends AbstractController
      */
     public function show(Question $question): Response
     {
+        $serie = $question->getSerie();
         return $this->render('question/show.html.twig', [
             'question' => $question,
+            'serie' => $serie
         ]);
     }
 

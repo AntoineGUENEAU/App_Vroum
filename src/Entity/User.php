@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,7 +23,8 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->roles = ['ROLE_STUDENT'];
+        $this->roles = ['ROLE_USER'];
+        $this->results = new ArrayCollection();
     }
 
     /**
@@ -56,6 +59,11 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user_id")
+     */
+    private $results;
 
     public function getId(): ?int
     {
@@ -189,5 +197,36 @@ class User implements UserInterface
     {
         // Pour affiche rle nom dans le select
         return $this->email;
+    }
+
+    /**
+     * @return Collection|Result[]
+     */
+    public function getResults(): Collection
+    {
+        return $this->results;
+    }
+
+    public function addResult(Result $result): self
+    {
+        if (!$this->results->contains($result)) {
+            $this->results[] = $result;
+            $result->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->contains($result)) {
+            $this->results->removeElement($result);
+            // set the owning side to null (unless already changed)
+            if ($result->getUserId() === $this) {
+                $result->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }
