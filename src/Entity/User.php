@@ -23,7 +23,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      */
     private $roles = [];
 
@@ -151,5 +151,11 @@ class User implements UserInterface
     public function setLastname($lastname): void
     {
         $this->lastname = $lastname;
+    }
+
+    public function __toString()
+    {
+        // Pour affiche rle nom dans le select
+        return $this->email;
     }
 }
