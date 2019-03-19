@@ -91,7 +91,7 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_STUDENT';
 
         return array_unique($roles);
     }
@@ -103,9 +103,9 @@ class User implements UserInterface
      */
     public function setRoles($roles): void
     {
-        if(!in_array('ROLE_USER',$roles))
+        if(!in_array('ROLE_STUDENT',$roles))
         {
-            $this->roles[]= 'ROLE_USER';
+            $this->roles[]= 'ROLE_STUDENT';
         }
         else {
             foreach ($roles as $role)
