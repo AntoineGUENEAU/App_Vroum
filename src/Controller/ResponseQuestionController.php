@@ -19,6 +19,9 @@ class ResponseQuestionController extends AbstractController
 {
     /**
      * @Route("/", name="response_question_index", methods={"GET"})
+     * @param ResponseQuestionRepository $responseQuestionRepository
+     *
+     * @return Response
      */
     public function index(ResponseQuestionRepository $responseQuestionRepository): Response
     {
@@ -29,6 +32,9 @@ class ResponseQuestionController extends AbstractController
 
     /**
      * @Route("/new", name="response_question_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -52,6 +58,9 @@ class ResponseQuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="response_question_show", methods={"GET"})
+     * @param ResponseQuestion $responseQuestion
+     *
+     * @return Response
      */
     public function show(ResponseQuestion $responseQuestion): Response
     {
@@ -62,6 +71,10 @@ class ResponseQuestionController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="response_question_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param ResponseQuestion $responseQuestion
+     *
+     * @return Response
      */
     public function edit(Request $request, ResponseQuestion $responseQuestion): Response
     {
@@ -84,6 +97,10 @@ class ResponseQuestionController extends AbstractController
 
     /**
      * @Route("/{id}", name="response_question_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param ResponseQuestion $responseQuestion
+     *
+     * @return Response
      */
     public function delete(Request $request, ResponseQuestion $responseQuestion): Response
     {

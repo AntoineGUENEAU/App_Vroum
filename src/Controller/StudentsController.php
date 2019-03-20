@@ -102,7 +102,6 @@ class StudentsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @param Request $request
