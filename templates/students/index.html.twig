@@ -10,6 +10,7 @@
                 <th>Lastname</th>
                 <th>Firstname</th>
                 <th>Email</th>
+                <th>NB Série</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -21,6 +22,7 @@
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.firstname }}</td>
                 <td>{{ user.email }}</td>
+                <td>{{ seriesCount[user.id] }}</td>
                 <td>
                     <a class="btn btn-light"  href="{{ path('student_show', {'id': user.id}) }}"><i class="fas fa-eye"></i></a>
                     <a class="btn btn-success"  href="{{ path('student_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>

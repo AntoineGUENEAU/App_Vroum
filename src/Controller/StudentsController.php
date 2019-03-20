@@ -26,10 +26,25 @@ class StudentsController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+        $users = $userRepository->findAll();
+
+        /* nombre de série effectuée par un user, par */
+        $seriesCount = [];
+        foreach ($users as $user) {
+            $seriesCount[$user->getId()] = $userRepository->getSeriesCount($user->getId());
+        }
+
         return $this->render('students/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $users,
+            'seriesCount' => $seriesCount
         ]);
     }
+
+//    public function getSeriesCount()
+//    {
+//        $entitymanager = $this->getDoctrine()->getManager();
+//        $query = $entitymanager->createQuery('aaa')->setParameter('userId', userId);
+//    }
 
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
@@ -102,6 +117,7 @@ class StudentsController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @param Request $request
@@ -111,7 +127,7 @@ class StudentsController extends AbstractController
      */
     public function delete(Request $request, User $user): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($user);
             $entityManager->flush();

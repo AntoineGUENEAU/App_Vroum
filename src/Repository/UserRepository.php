@@ -18,20 +18,27 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
-        $this->getSeriesCount();
     }
 
-    public function getSeriesCount()
+    /**
+     * @param $id
+     *  Retourne le nombre  de série faite par l'utilisateur
+     *
+     * @return mixed
+     */
+    public function getSeriesCount($id)
     {
-        $user_id = $this->find(4)->getId();
-        var_dump($this->createQueryBuilder('e')
-            ->join('e.App\Entity\Result', 'r')
-            ->where('r.user_id_id = ' . $user_id)
-            ->getQuery());
-        die();
+        $user = $this->find($id);
+        $datas = $this->createQueryBuilder('e')
+            ->innerJoin('e.results', 'r')
+            ->addSelect('count(r.id)')
+            ->leftJoin('r.serie_id', 's')
+            ->where('e.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
 
-
-
+        return $datas['0']['1'];
     }
 
     // /**
