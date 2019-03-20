@@ -1,0 +1,28 @@
+{% block header %}
+  <nav class="row row-nav no-margin">
+    <ul class="nav justify-content-start">
+      <li class="nav-item">
+        <a class="nav-item nav-link active" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-item nav-link" href="{{ path('serie_index') }}">Liste des séries</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-item nav-link" href="{{ path('student_index') }}">Liste des étudiants</a>
+      </li>
+    </ul>
+
+
+    <ul class="nav justify-content-end">
+      {% if app.user is not null %}
+        <li class="nav-item">
+          <a class="nav-item nav-link active" href="{{ path('logout') }}">Déconnexion</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-item nav-link active" href="{{ path('app_login') }}">Connexion</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+{% endblock %}
