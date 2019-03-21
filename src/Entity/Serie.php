@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Serie
 {
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -29,14 +35,10 @@ class Serie
     private $libelle;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Result", mappedBy="serie_id", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Result", mappedBy="serie", cascade={"persist", "remove"})
      */
     private $result;
 
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
 
     /**
      * @return mixed
@@ -108,8 +110,8 @@ class Serie
 
         // set (or unset) the owning side of the relation if necessary
         $newSerie_id = $result === null ? null : $this;
-        if ($newSerie_id !== $result->getSerieId()) {
-            $result->setSerieId($newSerie_id);
+        if ($newSerie_id !== $result->getSerie()) {
+            $result->setSerie($newSerie_id);
         }
 
         return $this;

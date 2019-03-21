@@ -209,7 +209,7 @@ class User implements UserInterface
     {
         if (!$this->results->contains($result)) {
             $this->results[] = $result;
-            $result->setUserId($this);
+            $result->setUser($this);
         }
 
         return $this;
@@ -220,8 +220,8 @@ class User implements UserInterface
         if ($this->results->contains($result)) {
             $this->results->removeElement($result);
             // set the owning side to null (unless already changed)
-            if ($result->getUserId() === $this) {
-                $result->setUserId(null);
+            if ($result->getUser() === $this) {
+                $result->setUser(null);
             }
         }
 

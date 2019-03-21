@@ -55,8 +55,8 @@ class ResultController extends AbstractController
      */
     public function show(Result $result): Response
     {
-        $student = $result->getUserId()->getUsername();
-        $serie = $result->getSerieId()->getLibelle();
+        $student = $result->getUser()->getUsername();
+        $serie = $result->getSerie()->getLibelle();
         return $this->render('result/show.html.twig', [
             'result' => $result,
             'serie' => $serie,
