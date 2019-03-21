@@ -7,7 +7,7 @@
 </head>
 <body>
 {% block body %}
-    <h1> Liste des series de {{ app.user.getFullname }} </h1>
+    <h1> Liste des series de {{ app.user.getFullname }}</h1>
     <ul>
         {% for result in results %}
             <li>{{ result.libelle }} {{ result.result }}</li>
