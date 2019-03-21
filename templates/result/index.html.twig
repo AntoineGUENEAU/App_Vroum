@@ -1,37 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Result index{% endblock %}
+{% block title %}Liste des résultats{% endblock %}
 
 {% block body %}
-    <h1>Result index</h1>
+  <h1>Liste des résultats</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Result</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for result in results %}
-            <tr>
-                <td>{{ result.id }}</td>
-                <td>{{ result.result }}</td>
-                <td>{{ result.date ? result.date|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('result_show', {'id': result.id}) }}">show</a>
-                    <a href="{{ path('result_edit', {'id': result.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Result</th>
+      <th>Date</th>
+      <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for result in results %}
+      <tr>
+        <td>{{ result.id }}</td>
+        <td>{{ result.result }}</td>
+        <td>{{ result.date ? result.date|date('Y-m-d H:i:s') : '' }}</td>
+        <td>
+          <a class="btn btn-light" href="{{ path('result_show', {'id': result.id}) }}"><i class="fas p-r-5
+          fa-eye"></i></a>
+          <a class="btn btn-success" href="{{ path('result_edit', {'id': result.id}) }}"><i class="fas
+          fa-pen p-r-5"></i></a>
+        </td>
+      </tr>
+    {% else %}
+      <tr>
+        <td colspan="4">aucun rrésultat trouvé</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 
-    <a href="{{ path('result_new') }}">Create new</a>
+  <a class="btn btn-success" href="{{ path('result_new') }}"><i class="fas fa-plus p-r-5"></i>Ajouter un
+    résultat</a>
 {% endblock %}

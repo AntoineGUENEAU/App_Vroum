@@ -14,8 +14,8 @@ class ResultType extends AbstractType
         $builder
             ->add('result')
             ->add('date')
-            ->add('user_id')
-            ->add('serie_id')
+            ->add('user')
+            ->add('serie')
         ;
     }
 

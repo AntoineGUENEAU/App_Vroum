@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Result;
 use App\Entity\Serie;
+use App\Form\Serie1Type;
 use App\Form\SerieType;
 use App\Repository\SerieRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -117,6 +121,67 @@ class SerieController extends AbstractController
      */
     public function sendSeriesInJson(Serie $serie)
     {
-        echo json_encode( $serie );
+
+//        Example de JSON de Francis
+//        [
+//            {
+//                "mQuestion": "Je me promène sur une route bucolique en bord de mer et j'aborde un lacet.",
+//                "mReponsesListe": [{
+//                    "mReponseLabel": "J'admire le paysage",
+//                        "mGoodAnswer": false
+//                    }, {
+//                    "mReponseLabel": "Je me concentre sur la route",
+//                        "mGoodAnswer": true
+//                    }
+//                ],
+//                "mImage": "Q1"
+//            },
+//            {
+//                "mQuestion": "Lorsque leur avertisseurs sonores (sirène) et lumineux (gyrophares) sont en action, les véhicules du SAMU sont ils prioritaires ?",
+//                "mReponsesListe": [{
+//                    "mReponseLabel": "Oui",
+//                        "mGoodAnswer": true
+//                    }, {
+//                    "mReponseLabel": "Non",
+//                        "mGoodAnswer": false
+//                    }
+//                ],
+//                "mImage": "Q2"
+//            }
+//        ]
+        $return = [];
+        foreach($serie->getQuestions() as $key => $question){
+            $return[$key]['mQuestion'] = $question->getContent();
+                foreach($question->getResponses() as $answer){
+                    $return[$key]['mReponsesListe']['mReponseLabel'] = $answer->getContent();
+                    $return[$key]['mReponsesListe']['mGoodAnswer'] = $answer->getGoodAnswer();
+                }
+            $return[$key]['mImage'] = $question->getImage();
+        }
+        return new JsonResponse($return);
+    }
+
+    /**
+     * @Route("result/{id}", name="result_serie", methods={"POST"})
+     *
+     * @param Request $request
+     * @param UserRepository $userRepository
+     *
+     */
+    public function resultSerieId(Request $request, UserRepository $userRepository)
+    {
+        var_dump('salut');
+        exit;
+        $result = new Result();
+
+        $email = $request->get('email');
+        $user = $userRepository->findOneBy(array('email' => $email));
+        $result->setResult($request->get('result'));
+        $result->setSerie($request->get('serieId'));
+        $result->setUser($user);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($result);
+        $entityManager->flush();
     }
 }

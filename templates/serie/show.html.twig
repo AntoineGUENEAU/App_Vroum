@@ -19,7 +19,7 @@
             <th>Questions</th>
 
                 {% for question in questions %}
-                    <td>{{ question.content }}<td/>
+                    <td>{{ question.content }} <td/>
                 {% endfor %}
 
         </tr>
@@ -28,7 +28,8 @@
 
     <a class="btn btn-light"  href="{{ path('serie_index') }}">Retour à la liste</a>
 
-    <a class="btn btn-success" href="{{ path('serie_edit', {'id': serie.id}) }}">i class="fas fa-pen p-r-5"></i>Editer</a>
+    <a class="btn btn-success" href="{{ path('serie_edit', {'id': serie.id}) }}"><i class="fas fa-pen
+    p-r-5"></i>Editer</a>
 
     {{ include('serie/_delete_form.html.twig') }}
 {% endblock %}
