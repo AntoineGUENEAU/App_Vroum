@@ -98,4 +98,14 @@ class SerieController extends AbstractController
 
         return $this->redirectToRoute('serie_index');
     }
+
+    /**
+     * @Route("/api/{id}", name="serie_JSON", methods={"GET"})
+     * @param Serie $id
+     * @return Response
+     */
+    public function sendSeriesInJson(Serie $serie)
+    {
+        echo json_encode( $serie );
+    }
 }
