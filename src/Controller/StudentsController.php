@@ -163,4 +163,24 @@ class StudentsController extends AbstractController
             'user' => $user,
         ]);
     }
+
+    /**
+     * @Route("/results/api/{id}", name="student_results_JSON", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @param  User $user
+     *
+     * @return Response
+     */
+    public function sendSeriesInJson(UserRepository $userRepository, $id)
+    {
+        $series = $userRepository->getStudentSeriesWithResultsJson($id);
+        return $this->render('students/series.html.twig', [
+            'series' => $series,
+        ]);
+//        $data = array();
+//        $data["name"]  = "olivier";
+//        $data["date"]  = time();
+//        $data["admin"] = true;
+//        echo json_encode( $data );
+    }
 }
