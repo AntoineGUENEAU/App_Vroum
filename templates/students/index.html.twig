@@ -16,29 +16,25 @@
     </thead>
     <tbody>
 
-    {% for user in users %}
-      {% if user.roles['0'] == "ROLE_STUDENT" %}
-        <tr>
-          <td>{{ user.lastname }}</td>
-          <td>{{ user.firstname }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ seriesCount[user.id] }}</td>
-          <td>
-            <a class="btn btn-light" href="{{ path('student_show', {'id': user.id}) }}"><i class="fas fa-eye
-p-r-5"></i></a>
-            <a class="btn btn-success" href="{{ path('student_edit', {'id': user.id}) }}"><i class="fas
-                    fa-pen p-r-5"></i></a>
-          </td>
-        </tr>
-      {% endif %}
-    {% else %}
-      <tr>
-        <td colspan="7">Aucun étudiant !</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
+        {% for student in students %}
+            <tr>
+                <td>{{ student.lastname }}</td>
+                <td>{{ student.firstname }}</td>
+                <td>{{ student.email }}</td>
+                {#<td>{{ student.getResults|length }}</td>#}
+                <td>
+                    <a class="btn btn-light"  href="{{ path('student_show', {'id': student.id}) }}"><i class="fas fa-eye"></i></a>
+                    <a class="btn btn-success"  href="{{ path('student_edit', {'id': student.id}) }}"><i class="fas fa-pen"></i></a>
+                    <a class="btn btn-success"  href="{{ path('student_results', {'id': student.id}) }}"><i class="fas fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun étudiant !</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-  <a class="btn btn-success" href="{{ path('student_new') }}"><i class="fas fa-plus p-r-5"></i>Ajouter un
-    étudient</a>
+    <a class="btn btn-success"  href="{{ path('student_new') }}"><i class="fas fa-plus p-r-5"></i>Ajouter un étudiant</a>
 {% endblock %}

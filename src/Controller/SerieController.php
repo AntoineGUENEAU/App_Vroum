@@ -23,7 +23,6 @@ class SerieController extends AbstractController
     /**
      * @Route("/", name="serie_index", methods={"GET"})
      * @param SerieRepository $serieRepository
-     *
      * @return Response
      */
     public function index(SerieRepository $serieRepository): Response
@@ -36,7 +35,6 @@ class SerieController extends AbstractController
     /**
      * @Route("/new", name="serie_new", methods={"GET","POST"})
      * @param Request $request
-     *
      * @return Response
      */
     public function new(Request $request): Response
@@ -62,7 +60,6 @@ class SerieController extends AbstractController
     /**
      * @Route("/{id}", name="serie_show", methods={"GET"})
      * @param Serie $serie
-     *
      * @return Response
      */
     public function show(Serie $serie): Response
@@ -78,7 +75,6 @@ class SerieController extends AbstractController
      * @Route("/{id}/edit", name="serie_edit", methods={"GET","POST"})
      * @param Request $request
      * @param Serie $serie
-     *
      * @return Response
      */
     public function edit(Request $request, Serie $serie): Response
@@ -104,18 +100,27 @@ class SerieController extends AbstractController
      * @Route("/{id}", name="serie_delete", methods={"DELETE"})
      * @param Request $request
      * @param Serie $serie
-     *
      * @return Response
      */
     public function delete(Request $request, Serie $serie): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $serie->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$serie->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($serie);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('serie_index');
+    }
+
+    /**
+     * @Route("/api/{id}", name="serie_JSON", methods={"GET"})
+     * @param Serie $serie
+     * @return void
+     */
+    public function sendSeriesInJson(Serie $serie)
+    {
+        echo json_encode( $serie );
     }
 
     /**

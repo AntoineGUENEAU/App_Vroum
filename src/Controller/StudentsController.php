@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Serie;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -46,25 +47,10 @@ class StudentsController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
-
-        /* nombre de série effectuée par un user, par */
-        $seriesCount = [];
-        foreach ($users as $user) {
-            $seriesCount[$user->getId()] = $userRepository->getSeriesCount($user->getId());
-        }
-
         return $this->render('students/index.html.twig', [
-            'users' => $users,
-            'seriesCount' => $seriesCount
+            'students' => $userRepository->findByRoleStudent(),
         ]);
     }
-
-//    public function getSeriesCount()
-//    {
-//        $entitymanager = $this->getDoctrine()->getManager();
-//        $query = $entitymanager->createQuery('aaa')->setParameter('userId', userId);
-//    }
 
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
@@ -155,4 +141,18 @@ class StudentsController extends AbstractController
 
         return $this->redirectToRoute('student_index');
     }
+
+    /**
+     * @Route("/results/{id}", name="student_results", methods={"GET"})
+     * @param  User $user
+     *
+     * @return Response
+     */
+    public function showStudentResults(User $user) : Response
+    {
+        return $this->render('students/series.html.twig', [
+            'results' => $user->getResults(),
+        ]);
+    }
+
 }

@@ -2,14 +2,18 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-{% block body %}{% endblock %}
+{% block body %}
+    <h1> Liste des series de {{ app.user.getFullname }} </h1>
+    <ul>
+        {% for result in results %}
+            <li>{{ result.libelle }} {{ result.result }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
 {% block javascripts %}{% endblock %}
-</body>
-</html>
-
 </body>
 </html>

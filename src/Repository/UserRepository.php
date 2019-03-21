@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,6 +17,22 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+
+    /**
+     * Find All Students
+     * @return mixed
+     */
+    public function findByRoleStudent()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles NOT LIKE :roles')
+            ->setParameter('roles', '%ROLE_MONITOR%');
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -40,32 +55,37 @@ class UserRepository extends ServiceEntityRepository
 
         return $datas['0']['1'];
     }
-
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-//    public function findByExampleField($value)
+//
+//    public function getStudentResults( User $user)
 //    {
 //        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
+//            ->innerJoin('u.results', 'r')
+//            ->where('u.id = :userId')
+//            ->setParameter('userId', $user->getId())
+//            ->addSelect('r.result')
+//            ->RIGHTJOIN('r.serie_id', 's')
+//            ->addSelect('s.libelle')
 //            ->getQuery()
-//            ->getResult()
-//        ;
+//            ->getSQL();
 //    }
 
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        try {
-//            return $this->createQueryBuilder('u')
-//                ->andWhere('u.exampleField = :val')
-//                ->setParameter('val', $value)
-//                ->getQuery()
-//                ->getOneOrNullResult();
-//        } catch (NonUniqueResultException $e) {
-//        }
-//    }
+    public function getStudentSeriesWithResultsJson( $id)
+    {
+        $userId = $this->find($id);
+
+        $query = $this->createQueryBuilder('u')
+            ->innerJoin('u.results', 'r')
+            ->addSelect('r.result')
+            ->leftJoin('r.serie_id', 's')
+            ->where('u.id = :userId')
+            ->addSelect('s.libelle')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getSQL();
+    }
+
+
+
+
 }

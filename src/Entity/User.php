@@ -23,7 +23,6 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->roles = ['ROLE_STUDENT'];
         $this->results = new ArrayCollection();
     }
 
@@ -165,6 +164,11 @@ class User implements UserInterface
     public function getFirstname()
     {
         return $this->firstname;
+    }
+
+    public function getFullname()
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 
     /**
