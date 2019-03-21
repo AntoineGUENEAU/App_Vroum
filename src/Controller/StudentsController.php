@@ -135,4 +135,32 @@ class StudentsController extends AbstractController
 
         return $this->redirectToRoute('student_index');
     }
+
+    /**
+     * @Route("/results/{id}", name="student_results", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @param  User $user
+     *
+     * @return Response
+     */
+    public function showStudentResults(UserRepository $userRepository, User $user) : Response
+    {
+
+        $series = $userRepository->getStudentSeriesWithResults($user);
+
+//        $qb = $this->querybuilder->createQueryBuilder();
+//        $qb
+//            ->select('a', 'u')
+//            ->from('Credit\Entity\UserCreditHistory', 'a')
+//            ->leftJoin('a.user', 'u')
+//            ->where('u = :user')
+//            ->setParameter('user', $user)
+//            ->getQuery()
+//            ->getResult();
+
+        return $this->render('students/series.html.twig', [
+            'series' => $series,
+            'user' => $user,
+        ]);
+    }
 }

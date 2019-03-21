@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -41,31 +40,38 @@ class UserRepository extends ServiceEntityRepository
         return $datas['0']['1'];
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-//    public function findByExampleField($value)
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getStudentSeriesWithResults( User $user)
+    {
 
+        $query = $this->createQueryBuilder('u')
+            ->innerJoin('u.results', 'r')
+            ->where('u.id = :userId')
+            ->addSelect('r.result')
+            ->RIGHTJOIN('r.serie_id', 's')
+            ->addSelect('s.libelle')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getDQL();
+        dump($query);
+        die();
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        try {
-//            return $this->createQueryBuilder('u')
-//                ->andWhere('u.exampleField = :val')
-//                ->setParameter('val', $value)
-//                ->getQuery()
-//                ->getOneOrNullResult();
-//        } catch (NonUniqueResultException $e) {
-//        }
-//    }
+//        return $query;
+    }
+    public function getStudentSeriesWithResults2( User $user) {
+
+        $query = $this->createQueryBuilder('r.result')
+            ->leftJoin('r.serie_id', 's')
+            ->addSelect('s.libelle')
+            ->innerJoin('r.user_id', 'u')
+            ->addSelect('r.result')
+            ->where('u.id = :userId')
+            ->setParameter('userId', $user->getId())
+            ->getQuery()
+            ->getResult();
+        dump($query);
+        die();
+
+//            return $query;
+
+    }
 }
