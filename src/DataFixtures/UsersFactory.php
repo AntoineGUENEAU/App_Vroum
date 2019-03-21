@@ -21,7 +21,7 @@ class UsersFactory extends Fixture
             $user->setRoles(["ROLE_MONITOR"]);
             $user->setLastname('monitor'.$i);
             $user->setFirstname( 'monitor'.$i);
-            $user->setEmail('monitor'.$i.'gmail.com');
+            $user->setEmail('monitor@'.$i.'gmail.com');
             // password: admin
             $user->setPassword('$2y$13$TAZsKi7yX22MzOr9LxdaKuioM.mPQJZdM5w/shEBL2O/oxsDemoNW');
             $manager->persist($user);

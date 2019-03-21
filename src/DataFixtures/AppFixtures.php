@@ -15,7 +15,7 @@ class AppFixtures extends Fixture
     {
         (new UsersFactory)->load($manager);
         (new SeriesFactory)->load($manager);
-        (new QuestionsFactory)->load($manager);
-        (new ResponsesFactory)->load($manager);
+//        (new QuestionsFactory)->load($manager);
+//        (new ResponsesFactory)->load($manager);
     }
 }
