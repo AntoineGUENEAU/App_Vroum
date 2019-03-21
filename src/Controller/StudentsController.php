@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Serie;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
@@ -148,11 +147,26 @@ class StudentsController extends AbstractController
      *
      * @return Response
      */
-    public function showStudentResults(User $user) : Response
+    public function showStudentResults(User $user): Response
     {
         return $this->render('students/series.html.twig', [
             'results' => $user->getResults(),
         ]);
     }
 
+
+    public function sendSeriesInJson(UserRepository $userRepository, SerieRepository $serieRepository, $id)
+    {
+        $userResults = $userRepository->find($id)->getResults();
+        dd($userResults);
+        $series = $userRepository->getStudentSeriesWithResultsJson($id);
+        return $this->render('students/series.html.twig', [
+            'series' => $series,
+        ]);
+//        $data = array();
+//        $data["name"]  = "olivier";
+//        $data["date"]  = time();
+//        $data["admin"] = true;
+//        echo json_encode( $data );
+    }
 }
