@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
-use App\Form\Serie1Type;
 use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +19,8 @@ class SerieController extends AbstractController
 {
     /**
      * @Route("/", name="serie_index", methods={"GET"})
+     * @param SerieRepository $serieRepository
+     * @return Response
      */
     public function index(SerieRepository $serieRepository): Response
     {
@@ -30,6 +31,8 @@ class SerieController extends AbstractController
 
     /**
      * @Route("/new", name="serie_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -53,6 +56,8 @@ class SerieController extends AbstractController
 
     /**
      * @Route("/{id}", name="serie_show", methods={"GET"})
+     * @param Serie $serie
+     * @return Response
      */
     public function show(Serie $serie): Response
     {
@@ -65,6 +70,9 @@ class SerieController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="serie_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Serie $serie
+     * @return Response
      */
     public function edit(Request $request, Serie $serie): Response
     {
@@ -87,6 +95,9 @@ class SerieController extends AbstractController
 
     /**
      * @Route("/{id}", name="serie_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Serie $serie
+     * @return Response
      */
     public function delete(Request $request, Serie $serie): Response
     {
@@ -101,8 +112,8 @@ class SerieController extends AbstractController
 
     /**
      * @Route("/api/{id}", name="serie_JSON", methods={"GET"})
-     * @param Serie $id
-     * @return Response
+     * @param Serie $serie
+     * @return void
      */
     public function sendSeriesInJson(Serie $serie)
     {

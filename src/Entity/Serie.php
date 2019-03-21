@@ -29,13 +29,15 @@ class Serie
     private $libelle;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Result", mappedBy="serie_id", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="serie", orphanRemoval=true)
      */
-    private $result;
+    private $results;
+
 
     public function __construct()
     {
         $this->questions = new ArrayCollection();
+        $this->results = new ArrayCollection();
     }
 
     /**
@@ -97,21 +99,35 @@ class Serie
         return $this->libelle;
     }
 
-    public function getResult(): ?Result
+    /**
+     * @return Collection|Result[]
+     */
+    public function getResults(): Collection
     {
-        return $this->result;
+        return $this->results;
     }
 
-    public function setResult(?Result $result): self
+    public function addResult(Result $result): self
     {
-        $this->result = $result;
-
-        // set (or unset) the owning side of the relation if necessary
-        $newSerie_id = $result === null ? null : $this;
-        if ($newSerie_id !== $result->getSerieId()) {
-            $result->setSerieId($newSerie_id);
+        if (!$this->results->contains($result)) {
+            $this->results[] = $result;
+            $result->setSerie($this);
         }
 
         return $this;
     }
+
+    public function removeResult(Result $result): self
+    {
+        if ($this->results->contains($result)) {
+            $this->results->removeElement($result);
+            // set the owning side to null (unless already changed)
+            if ($result->getSerie() === $this) {
+                $result->setSerie(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

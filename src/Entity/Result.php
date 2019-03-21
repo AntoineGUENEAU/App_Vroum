@@ -22,10 +22,6 @@ class Result
      */
     private $user;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Serie", inversedBy="result", cascade={"persist", "remove"})
-     */
-    private $serie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -36,6 +32,12 @@ class Result
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Serie", inversedBy="results")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $serie;
 
     public function getId(): ?int
     {
@@ -53,23 +55,6 @@ class Result
         return $this;
     }
 
-    /**
-     * @return Serie|null
-     */
-    public function getSerie(): ?Serie
-    {
-        return $this->serie;
-    }
-
-    /**
-     * @param Serie|null $serie
-     * @return Result
-     */
-    public function setSerie(?Serie $serie): self
-    {
-        $this->serie = $serie;
-        return $this;
-    }
 
     public function getResult(): ?int
     {
@@ -91,6 +76,18 @@ class Result
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
+        return $this;
+    }
+
+    public function getSerie(): ?Serie
+    {
+        return $this->serie;
+    }
+
+    public function setSerie(?Serie $serie): self
+    {
+        $this->serie = $serie;
+
         return $this;
     }
 }

@@ -19,6 +19,8 @@ class ResultController extends AbstractController
 {
     /**
      * @Route("/", name="result_index", methods={"GET"})
+     * @param ResultRepository $resultRepository
+     * @return Response
      */
     public function index(ResultRepository $resultRepository): Response
     {
@@ -29,6 +31,8 @@ class ResultController extends AbstractController
 
     /**
      * @Route("/new", name="result_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -52,6 +56,8 @@ class ResultController extends AbstractController
 
     /**
      * @Route("/{id}", name="result_show", methods={"GET"})
+     * @param Result $result
+     * @return Response
      */
     public function show(Result $result): Response
     {
@@ -66,6 +72,9 @@ class ResultController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="result_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Result $result
+     * @return Response
      */
     public function edit(Request $request, Result $result): Response
     {
@@ -88,6 +97,9 @@ class ResultController extends AbstractController
 
     /**
      * @Route("/{id}", name="result_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Result $result
+     * @return Response
      */
     public function delete(Request $request, Result $result): Response
     {
