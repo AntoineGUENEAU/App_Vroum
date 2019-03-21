@@ -5,11 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -18,6 +19,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
  */
 class StudentsController extends AbstractController
 {
+
+    /**
+     * @Route("/register", name="register")
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     */
+    public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $user = new User();
+        $user->setRoles(["ROLE_MONITOR"]);
+        $user->setLastname($request->get('lastname'));
+        $user->setFirstname($request->get('firstname'));
+        $user->setEmail($request->get('email'));
+        $user->setPassword($encoder->encodePassword($user, $request->get('password')));
+        $manager->persist($user);
+        $manager->flush();
+    }
+
     /**
      * @Route("/", name="student_index", methods={"GET"})
      * @param UserRepository $userRepository
