@@ -20,12 +20,12 @@ class Result
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="results")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user_id;
+    private $user;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Serie", inversedBy="result", cascade={"persist", "remove"})
      */
-    private $serie_id;
+    private $serie;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
@@ -42,27 +42,32 @@ class Result
         return $this->id;
     }
 
-    public function getUserId(): ?User
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setUser(?User $user): self
     {
-        $this->user_id = $user_id;
-
+        $this->user = $user;
         return $this;
     }
 
-    public function getSerieId(): ?Serie
+    /**
+     * @return Serie|null
+     */
+    public function getSerie(): ?Serie
     {
-        return $this->serie_id;
+        return $this->serie;
     }
 
-    public function setSerieId(?Serie $serie_id): self
+    /**
+     * @param Serie|null $serie
+     * @return Result
+     */
+    public function setSerie(?Serie $serie): self
     {
-        $this->serie_id = $serie_id;
-
+        $this->serie = $serie;
         return $this;
     }
 
@@ -86,7 +91,6 @@ class Result
     public function setDate(?\DateTimeInterface $date): self
     {
         $this->date = $date;
-
         return $this;
     }
 }
