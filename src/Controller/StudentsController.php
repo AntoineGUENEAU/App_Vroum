@@ -51,12 +51,6 @@ class StudentsController extends AbstractController
         ]);
     }
 
-//    public function getSeriesCount()
-//    {
-//        $entitymanager = $this->getDoctrine()->getManager();
-//        $query = $entitymanager->createQuery('aaa')->setParameter('userId', userId);
-//    }
-
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      * @param Request $request
@@ -149,19 +143,14 @@ class StudentsController extends AbstractController
 
     /**
      * @Route("/results/{id}", name="student_results", methods={"GET"})
-     * @param UserRepository $userRepository
      * @param  User $user
      *
      * @return Response
      */
-    public function showStudentResults(UserRepository $userRepository, User $user) : Response
+    public function showStudentResults(User $user) : Response
     {
-
-        $series = $userRepository->getStudentSeriesWithResults($user);
-
         return $this->render('students/series.html.twig', [
-            'series' => $series,
-            'user' => $user,
+            'results' => $user.getResults(),
         ]);
     }
 

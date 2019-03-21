@@ -55,44 +55,20 @@ class UserRepository extends ServiceEntityRepository
 
         return $datas['0']['1'];
     }
-
-    public function getStudentSeriesWithResultsMonitor( User $user)
-    {
-
-        $query = $this->createQueryBuilder('u')
-            ->innerJoin('u.results', 'r')
-            ->where('u.id = :userId')
-            ->addSelect('r.result')
-            ->RIGHTJOIN('r.serie_id', 's')
-            ->addSelect('s.libelle')
-            ->setParameter('userId', $user->getId())
-            ->getQuery()
-            ->getDQL();
-        dump($query);
-        die();
-
-//        return $query;
-    }
-
-
-
-//    public function getStudentSeriesWithResults2( User $user) {
 //
-//        $query = $this->createQueryBuilder('r.result')
-//            ->leftJoin('r.serie_id', 's')
-//            ->addSelect('s.libelle')
-//            ->innerJoin('r.user_id', 'u')
-//            ->addSelect('r.result')
+//    public function getStudentResults( User $user)
+//    {
+//        return $this->createQueryBuilder('u')
+//            ->innerJoin('u.results', 'r')
 //            ->where('u.id = :userId')
 //            ->setParameter('userId', $user->getId())
+//            ->addSelect('r.result')
+//            ->RIGHTJOIN('r.serie_id', 's')
+//            ->addSelect('s.libelle')
 //            ->getQuery()
-//            ->getResult();
-//        dump($query);
-//        die();
-
-//            return $query;
-
+//            ->getSQL();
 //    }
+
 
     public function getStudentSeriesWithResultsJson( $id)
     {
@@ -107,10 +83,6 @@ class UserRepository extends ServiceEntityRepository
             ->setParameter('userId', $userId)
             ->getQuery()
             ->getSQL();
-        dump($query);
-        die();
-
-//        return $query;
     }
 
 

@@ -7,20 +7,14 @@
 </head>
 <body>
 {% block body %}
-    <h1> Liste des series de {{ series.user.firstname }} </h1>
-
-
-<ul>
-    {% for serie in series %}
-        <li>{{ serie.libelle }} {{ serie.result }}</li>
-        <br />
-    {% endfor %}
-</ul>
-
-{% endblock %}
-{% block javascripts %}{% endblock %}
-</body>
-</html>
-
+    <h1> Liste des series de {{ results.user.getFullname }} </h1>
+    <ul>
+        {% for result in results %}
+            <li>{{ result.libelle }} {{ result.result }}</li>
+            <br />
+        {% endfor %}
+    </ul>
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
 </body>
 </html>
