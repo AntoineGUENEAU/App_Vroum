@@ -7,26 +7,22 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>Firstname</th>
                 <th>Lastname</th>
-                <th>Password</th>
+                <th>Firstname</th>
+                <th>Email</th>
+                <th>NB Série</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {{ dump(users) }}
 
         {% for user in users %}
-          {% if user.roles | json_encode === ["ROLE_STUDENT"] %}
+          {% if user.roles['0'] == "ROLE_STUDENT" %}
             <tr>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-                <td>{{ user.firstname }}</td>
                 <td>{{ user.lastname }}</td>
-                <td>{{ user.password }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ seriesCount[user.id] }}</td>
                 <td>
                     <a class="btn btn-light"  href="{{ path('student_show', {'id': user.id}) }}"><i class="fas fa-eye"></i></a>
                     <a class="btn btn-success"  href="{{ path('student_edit', {'id': user.id}) }}"><i class="fas fa-pen"></i></a>
@@ -35,7 +31,7 @@
           {% endif %}
         {% else %}
             <tr>
-                <td colspan="7">Aucun utiilisateur !</td>
+                <td colspan="7">Aucun étudiant !</td>
             </tr>
         {% endfor %}
         </tbody>

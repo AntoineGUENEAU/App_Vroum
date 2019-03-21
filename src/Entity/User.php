@@ -23,7 +23,7 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->roles = ['ROLE_USER'];
+        $this->roles = ['ROLE_STUDENT'];
         $this->results = new ArrayCollection();
     }
 
@@ -98,8 +98,6 @@ class User implements UserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_STUDENT';
 
         return array_unique($roles);
     }
@@ -111,11 +109,11 @@ class User implements UserInterface
      */
     public function setRoles($roles): void
     {
-        if(!in_array('ROLE_STUDENT',$roles))
-        {
-            $this->roles[]= 'ROLE_STUDENT';
-        }
-        else {
+//        if(!in_array('ROLE_STUDENT',$roles))
+//        {
+//            $this->roles[]= 'ROLE_STUDENT';
+//        }
+//        else {
             foreach ($roles as $role)
             {
                 if(substr($role, 0, 5) !== 'ROLE_')
@@ -126,7 +124,7 @@ class User implements UserInterface
                     $this->roles[] =$role;
                 }
             }
-        }
+//        }
     }
 
     /**
