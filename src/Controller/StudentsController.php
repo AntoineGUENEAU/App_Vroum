@@ -46,17 +46,8 @@ class StudentsController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
-        $users = $userRepository->findAll();
-
-        /* nombre de série effectuée par un user, par */
-        $seriesCount = [];
-        foreach ($users as $user) {
-            $seriesCount[$user->getId()] = $userRepository->getSeriesCount($user->getId());
-        }
-
         return $this->render('students/index.html.twig', [
-            'users' => $users,
-            'seriesCount' => $seriesCount
+            'students' => $userRepository->findByRoleStudent(),
         ]);
     }
 
@@ -167,16 +158,6 @@ class StudentsController extends AbstractController
     {
 
         $series = $userRepository->getStudentSeriesWithResults($user);
-
-//        $qb = $this->querybuilder->createQueryBuilder();
-//        $qb
-//            ->select('a', 'u')
-//            ->from('Credit\Entity\UserCreditHistory', 'a')
-//            ->leftJoin('a.user', 'u')
-//            ->where('u = :user')
-//            ->setParameter('user', $user)
-//            ->getQuery()
-//            ->getResult();
 
         return $this->render('students/series.html.twig', [
             'series' => $series,

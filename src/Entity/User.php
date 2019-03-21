@@ -23,7 +23,6 @@ class User implements UserInterface
      */
     public function __construct()
     {
-        $this->roles = ['ROLE_STUDENT'];
         $this->results = new ArrayCollection();
     }
 

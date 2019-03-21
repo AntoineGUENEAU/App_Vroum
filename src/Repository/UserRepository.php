@@ -19,6 +19,22 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+
+    /**
+     * Find All Students
+     * @return mixed
+     */
+    public function findByRoleStudent()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles NOT LIKE :roles')
+            ->setParameter('roles', '%ROLE_MONITOR%');
+
+        return $qb->getQuery()->getResult();
+    }
+
     /**
      * @param $id
      *  Retourne le nombre  de série faite par l'utilisateur
