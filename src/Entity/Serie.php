@@ -12,11 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Serie
 {
 
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-    }
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()

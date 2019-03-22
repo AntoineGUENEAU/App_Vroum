@@ -119,7 +119,7 @@ class SerieController extends AbstractController
      * @param Serie $serie
      * @return void
      */
-    public function sendSeriesInJson(Serie $serie)
+    public function sendSeriesInJson(Serie $serie):JsonResponse
     {
 
 //        Example de JSON de Francis

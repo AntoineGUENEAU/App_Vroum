@@ -6,6 +6,8 @@ use App\Entity\Result;
 use App\Entity\Serie;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -76,6 +78,29 @@ class UserRepository extends ServiceEntityRepository
 //        return $query;
     }
 
+    public function getResultsByStudent($id) {
+
+        $user = $this->find($id);
+        $userMail = $user->getEmail();
+        $entityManager = $this->getEntityManager();
+        $rsm = new ResultSetMapping();
+// build rsm here
+
+        $query = $entityManager->createNativeQuery('SELECT
+    serie.*,
+   CASE
+       WHEN myResult.result is null THEN -1
+       ELSE myResult.result
+    END
+FROM
+    serie left outer join
+   (select result.result, result.serie_id_id from result inner join user on result.user_id = user.id 
+        where user.email = \'user.Mail\') AS myResult   
+        on serie.id = myResult.serie_id_id ORDER by serie.id', $rsm);
+        $query->setParameter('userMail', $userMail);
+
+        return $query->getResult();
+    }
 
 
 //    public function getStudentSeriesWithResults2( User $user) {

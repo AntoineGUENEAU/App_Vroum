@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\SerieRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -142,26 +143,48 @@ class StudentsController extends AbstractController
     }
 
     /**
-     * @Route("/results/{id}", name="student_results", methods={"GET"})
-     * @param  User $user
-     *
+     * @Route("/results/api/{id}", name="student_JSON_results", methods={"GET"})
+     * @param UserRepository $userRepository
+     * @param SerieRepository $serieRepository
+     * @param $id
      * @return Response
      */
-    public function showStudentResults(User $user): Response
-    {
-        return $this->render('students/series.html.twig', [
-            'results' => $user->getResults(),
-        ]);
-    }
-
-
     public function sendSeriesInJson(UserRepository $userRepository, SerieRepository $serieRepository, $id)
     {
+//        $user = $userRepository->find($id);
+//        $userResults = $userRepository->getResultsByStudent($id);
         $userResults = $userRepository->find($id)->getResults();
-        dd($userResults);
-        $series = $userRepository->getStudentSeriesWithResultsJson($id);
+        $series = $serieRepository->findAll();
+//        dd($userResults, $series);
+
+        $return = [];
+        foreach($series as $key => $serie){
+            $return[$key]['libelle'] = $serie->getLibelle();
+            foreach($userResults as $userResult){
+                $return[$key]['UserResult'] = $userResult;
+            }
+        }
+        return new JsonResponse($return);
+
+
+//        $return = [];
+//        foreach($serie->getQuestions() as $key => $question){
+//            $return[$key]['mQuestion'] = $question->getContent();
+//            foreach($question->getResponses() as $answer){
+//                $return[$key]['mReponsesListe']['mReponseLabel'] = $answer->getContent();
+//                $return[$key]['mReponsesListe']['mGoodAnswer'] = $answer->getGoodAnswer();
+//            }
+//            $return[$key]['mImage'] = $question->getImage();
+//        }
+//        return new JsonResponse($return);
+
+
+
+
         return $this->render('students/series.html.twig', [
             'series' => $series,
+            'results' => $userResults,
+            'user' => $user
         ]);
 //        $data = array();
 //        $data["name"]  = "olivier";
@@ -169,4 +192,17 @@ class StudentsController extends AbstractController
 //        $data["admin"] = true;
 //        echo json_encode( $data );
     }
+
+//    /**
+//     * @Route("/results/{id}", name="student_results", methods={"GET"})
+//     * @param  User $user
+//     *
+//     * @return Response
+//     */
+//    public function showStudentResults(User $user): Response
+//    {
+//        return $this->render('students/series.html.twig', [
+//            'results' => $user->getResults(),
+//        ]);
+//    }
 }
