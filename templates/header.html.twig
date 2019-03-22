@@ -1,5 +1,7 @@
 {% block header %}
   <nav class="row row-nav no-margin">
+
+    {% if app.user is not null %}
     <ul class="nav justify-content-start">
       <li class="nav-item">
         <a class="nav-item nav-link active" href="/">Home</a>
@@ -13,9 +15,8 @@
       <li class="nav-item">
         <a class="nav-item nav-link" href="{{ path('result_index') }}">Liste des résultats</a>
       </li>
-
     </ul>
-
+    {% endif %}
 
     <ul class="nav justify-content-end">
       {% if app.user is not null %}

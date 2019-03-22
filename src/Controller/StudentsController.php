@@ -16,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/student")
- * @Security("has_role('ROLE_MONITOR')")
  */
 class StudentsController extends AbstractController
 {
@@ -30,18 +29,23 @@ class StudentsController extends AbstractController
     public function register(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
-        $user->setRoles(["ROLE_MONITOR"]);
+        $user->setRoles(["ROLE_STUDENT"]);
         $user->setLastname($request->get('lastname'));
         $user->setFirstname($request->get('firstname'));
         $user->setEmail($request->get('email'));
         $user->setPassword($encoder->encodePassword($user, $request->get('password')));
         $manager->persist($user);
         $manager->flush();
+
+        return $this->render('students/thanks.html.twig', [
+            'student' => $user,
+        ]);
     }
 
     /**
      * @Route("/", name="student_index", methods={"GET"})
      * @param UserRepository $userRepository
+     * @Security("has_role('ROLE_MONITOR')")
      *
      * @return Response
      */
@@ -55,6 +59,7 @@ class StudentsController extends AbstractController
     /**
      * @Route("/new", name="student_new", methods={"GET","POST"})
      * @param Request $request
+     * @Security("has_role('ROLE_MONITOR')")
      *
      * @param UserPasswordEncoderInterface $encoder
      *
@@ -88,7 +93,7 @@ class StudentsController extends AbstractController
     /**
      * @Route("/{id}", name="student_show", methods={"GET"})
      * @param User $user
-     *
+     * @Security("has_role('ROLE_MONITOR')")
      * @return Response
      */
     public function show(User $user): Response
@@ -102,7 +107,7 @@ class StudentsController extends AbstractController
      * @Route("/{id}/edit", name="student_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
-     *
+     * @Security("has_role('ROLE_MONITOR')")
      * @return Response
      */
     public function edit(Request $request, User $user): Response
@@ -128,7 +133,7 @@ class StudentsController extends AbstractController
      * @Route("/{id}", name="student_delete", methods={"DELETE"})
      * @param Request $request
      * @param User $user
-     *
+     * @Security("has_role('ROLE_MONITOR')")
      * @return Response
      */
     public function delete(Request $request, User $user): Response
