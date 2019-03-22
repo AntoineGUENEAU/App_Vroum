@@ -60,7 +60,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Result", mappedBy="user")
      */
     private $results;
 
