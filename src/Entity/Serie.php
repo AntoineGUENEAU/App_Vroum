@@ -39,13 +39,6 @@ class Serie
      */
     private $results;
 
-
-    public function __construct()
-    {
-        $this->questions = new ArrayCollection();
-        $this->results = new ArrayCollection();
-    }
-
     /**
      * @return mixed
      */

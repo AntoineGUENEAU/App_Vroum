@@ -17,7 +17,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/serie")
- * @Security("has_role('ROLE_MONITOR')")
  */
 class SerieController extends AbstractController
 {
