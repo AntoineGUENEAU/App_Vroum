@@ -152,8 +152,8 @@ class SerieController extends AbstractController
         foreach($serie->getQuestions() as $key => $question){
             $return[$key]['mQuestion'] = $question->getContent();
                 foreach($question->getResponses() as $answer){
-                    $return[$key]['mReponsesListe']['mReponseLabel'] = $answer->getContent();
-                    $return[$key]['mReponsesListe']['mGoodAnswer'] = $answer->getGoodAnswer();
+                    $return[$key]['mReponsesListe']['mReponseLabel'][] = $answer->getContent();
+                    $return[$key]['mReponsesListe']['mGoodAnswer'][] = $answer->getGoodAnswer();
                 }
             $return[$key]['mImage'] = $question->getImage();
         }
